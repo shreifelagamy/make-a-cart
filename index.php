@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Cart;
-
 class Cart
 {
-	protected $cart; // the main cart
+	/**
+	* I will depend on SESSION to save the cart 
+	*/
+
+	protected $cart;
 	public function __construct()
 	{
 		$this->cart = [];
@@ -49,6 +51,7 @@ class Cart
 	public function find($id)
 	{
 		$result = (OBJECT) "";
+		$result->quantity = 0;
 		foreach ($this->cart as $item) {
 			if($item['id'] == $id) {
 				$result->quantity = ( isset($item['quantity']) ) ? $item['quantity'] : 1;
@@ -112,4 +115,34 @@ class Cart
 			}
 		}
 	}
+
+	public function get_cart()
+	{
+		return $this->cart;
+	}
 }
+
+	$items = [
+	    [
+	        'id' => '1',
+	        'name' => 'item_1',
+	        'price' => 10
+	    ],
+	    [
+	        'id' => '2',
+	        'name' => 'item_2',
+	        'price' => 30
+	    ],
+	    [
+	        'id' => '3',
+	        'name' => 'item_3',
+	        'price' => 40
+	    ]
+	];
+
+	$cart = new Cart();
+	$cart->setItems($items);
+
+    $cart->increment('1');
+    $item = $cart->find('1');
+	var_dump($item);
