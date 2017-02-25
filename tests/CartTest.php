@@ -75,11 +75,12 @@ class CartTest extends TestCase
 
     public function testItDecrementsItems()
     {
-        $item = $this->cart->find('1');
         $this->cart->increment('1');
+        $item = $this->cart->find('1');
         static::assertEquals($item->quantity, 2);
 
         $this->cart->decrement('1');
+        $item = $this->cart->find('1');
         static::assertEquals($item->quantity, 1);
         static::assertEquals($this->cart->count(), 3);
         $this->cart->decrement('1'); // removes it because none are left.
@@ -92,6 +93,7 @@ class CartTest extends TestCase
         static::assertEquals($item->quantity, 1);
 
         $this->cart->increment('1');
+        $item = $this->cart->find('1');
         static::assertEquals($item->quantity, 2);
     }
 }

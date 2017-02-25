@@ -23,14 +23,14 @@ class Cart
 
 				/** 
 				* Check if item id already exist 
-				* if yes incrment quantity
+				* if yes increment quantity
 				* if no just push to cart array 
 				*/
 
 				if( $cart_item['id'] == $item['id'] ) {
 					$this->cart[$key]['price'] *= 2;
 					$quantity = ( isset($this->cart[$key]['quantity']) ) ? $this->cart[$key]['quantity'] : 1;
-					$quantity += 1;
+					$quantity++;
 					$this->cart[$key]['quantity'] = $quantity;
 					break;
 				}
@@ -66,7 +66,7 @@ class Cart
 			if( isset($item['quantity']) )
 				$count += $item['quantity'];
 			else 
-				$count += 1;
+				$count++;
 		}
 		return $count;
 	}
@@ -93,9 +93,12 @@ class Cart
 	{
 		foreach ($this->cart as $key => $item) {
 			if($item['id'] == $id) {
-				$quantity = ( isset($item['quantity']) )? $item['quantity']: 1;
-				$quantity += 1;
-				$this->cart[$key]['quantity'] = $quantity;
+				if( isset($item['quantity']) ) {
+					$this->cart[$key]['quantity']++;
+				} 
+				else {
+					$this->cart[$key]['quantity'] = 2;
+				}
 			}
 		}
 	}
@@ -107,7 +110,7 @@ class Cart
 				if( !isset($this->cart[$key]) || $this->cart[$key]['quantity'] == 1 ) {
 					unset($this->cart[$key]);
 				} else {
-					$this->cart['quantity'] -= 1;	
+					$this->cart[$key]['quantity']--;	
 				}
 			}
 		}

@@ -96,9 +96,15 @@ class Cart
 	{
 		foreach ($this->cart as $key => $item) {
 			if($item['id'] == $id) {
-				$quantity = ( isset($item['quantity']) )? $item['quantity']: 1;
-				$quantity += 1;
-				$this->cart[$key]['quantity'] = $quantity;
+				if( isset($item['quantity']) ) {
+					$this->cart[$key]['quantity'] += 1;
+				} 
+				else {
+					$this->cart[$key]['quantity'] = 1
+				}
+				// $quantity = ( isset($item['quantity']) )? $item['quantity']: 1;
+				// $quantity += 1;
+				// $this->cart[$key]['quantity'] = $quantity;
 			}
 		}
 	}
@@ -110,7 +116,7 @@ class Cart
 				if( !isset($this->cart[$key]) || $this->cart[$key]['quantity'] == 1 ) {
 					unset($this->cart[$key]);
 				} else {
-					$this->cart['quantity'] -= 1;	
+					$this->cart[$key]['quantity'] -= 1;	
 				}
 			}
 		}
@@ -144,5 +150,5 @@ class Cart
 	$cart->setItems($items);
 
     $cart->increment('1');
-    $item = $cart->find('1');
+    $cart->decrement('1');
 	var_dump($item);
